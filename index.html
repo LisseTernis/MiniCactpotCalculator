@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <style>
@@ -22,7 +23,7 @@
       font-weight: 600;
     }
 
-    tbody tr:nth-child(odd) { background-color: #d6d6d6; }
+    table.results tbody tr:nth-child(odd) { background-color: #d6d6d6; }
 
     th {
       font-weight: 600;
@@ -52,13 +53,19 @@
       background-color: yellow;
     }
 
+    select {
+      -moz-appearance:none; /* Firefox */
+      -webkit-appearance:none; /* Safari and Chrome */
+      appearance:none;
+    }
+
     </style>
   </head>
   <body>
     <p>
     <table>
       <tr>
-        <td>D</td><td></td><td>E</td><td>F</td><td>G</td><td></td><td>H</td><td></td>
+        <td>D</td><td></td><td>E</td><td>F</td><td>G</td><td></td><td>H</td><td style="padding-left: 1em"><button id="clear">Clear</button></td>
       </tr><tr>
         <!--<td>D↘︎</td><td>E↓</td><td>F↓</td><td>G↓</td><td>H↙︎</td>-->
         <td></td><td>↘︎</td><td>↓</td><td>↓</td><td>↓</td><td>↙︎</td><td></td>
@@ -66,34 +73,45 @@
       </tr>
       <tr>
         <td>C</td><td>→</td>
-        <td><input id="aa"/></td>
-        <td><input id="ba"/></td>
-        <td><input id="ca"/></td>
+        <!--<td><input id="aa"/></td>-->
+        <!--<td><input id="ba"/></td>-->
+        <!--<td><input id="ca"/></td>-->
+        <td><select id="aa"/></td>
+        <td><select id="ba"/></td>
+        <td><select id="ca"/></td>
         <td> </td>
         <td> </td>
         <td class="bestChance" id="bestChance">Blah</td>
       </tr>
       <tr>
         <td>B</td><td>→</td>
-        <td><input id="ab"/></td>
-        <td><input id="bb"/></td>
-        <td><input id="cb"/></td>
+        <!--<td><input id="ab"/></td>-->
+        <!--<td><input id="bb"/></td>-->
+        <!--<td><input id="cb"/></td>-->
+        <td><select id="ab"/></td>
+        <td><select id="bb"/></td>
+        <td><select id="cb"/></td>
         <td> </td>
         <td> </td>
         <td class="bestReward" id="bestReward">Blah</td>
       </tr>
       <tr>
         <td>A</td><td>→</td>
+        <!--
         <td><input id="ac"/></td>
         <td><input id="bc"/></td>
         <td><input id="cc"/></td>
+        -->
+        <td><select id="ac"/></td>
+        <td><select id="bc"/></td>
+        <td><select id="cc"/></td>
         <td> </td>
         <td> </td>
         <td> </td>
       </tr>
     </table>
     </p><p>
-    <table>
+    <table class="results">
     <tr>
     <th>Sum</th><th>Reward</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th>
     </tr><tr>
@@ -176,6 +194,31 @@
     var cc = window.document.getElementById("cc");
     cc.style.width = inputWidth;
     cc.addEventListener("change", updateChances);
+
+    var fields = [aa, ab, ac, ba, bb, bc, ca, cb, cc];
+
+    var opt;
+    for (var field of fields) {
+      opt = window.document.createElement("option");
+      opt.innerText = "";
+      field.appendChild(opt);
+      for (var i = 1; i < 10; ++i) {
+        opt = window.document.createElement("option");
+        opt.innerText = String(i)
+        field.appendChild(opt);
+      }
+    }
+
+    var results = {
+    A: [ac, bc, cc],
+    B: [ab, bb, cb],
+    C: [aa, ba, ca],
+    D: [aa, bb, cc],
+    E: [aa, ab, ac],
+    F: [ba, bb, bc],
+    G: [ca, cb, cc],
+    H: [ca, bb, ac],
+    };
 
     var bestChance = window.document.getElementById("bestChance");
     var bestReward = window.document.getElementById("bestReward");
@@ -366,24 +409,25 @@
       value.style.width = "3em";
     }
 
-    var results = {
-    A: [ac, bc, cc],
-    B: [ab, bb, cb],
-    C: [aa, ba, ca],
-    D: [aa, bb, cc],
-    E: [aa, ab, ac],
-    F: [ba, bb, bc],
-    G: [ca, cb, cc],
-    H: [ca, bb, ac],
-    };
+    function clear() {
+      for (var field of fields) {
+        field.value = "";
+      }
+      updateChances();
+    }
+
+    window.document.getElementById("clear").addEventListener("click", clear);
 
     function getKnownNumbers() {
       var known = [];
-      for (var result of Object.values(results)) {
-        for (var r of result) {
-          if (r.value != "") {
-            known.push(parseInt(r.value));
-          }
+      for (var field of fields) {
+        /*
+        if (field.value != "") {
+          known.push(parseInt(field.value));
+        }
+        */
+        if (field.selectedIndex != 0) {
+          known.push(field.selectedIndex);
         }
       }
       return known;
@@ -470,6 +514,16 @@
 
     function updateChances() {
       var known = getKnownNumbers();
+      var unknown = Array.from(Array(9), (_, x) => x + 1).filter(
+              x => !known.includes(x));
+      for (var field of fields) {
+        for (var index of known) {
+          field.children[index].disabled = true;
+        }
+        for (var index of unknown) {
+          field.children[index].disabled = false;
+        }
+      }
       var chances;
       for (var key of Object.keys(rewards)) {
         resultsTable[key].style.color = "inherit";
@@ -480,6 +534,7 @@
         chances = calcChances(key, known);
         for (var [reward, chance] of Object.entries(chances)) {
           var index = key + String(reward).padStart(2, '0');
+          resultsTable[index].className = "";
           if (chance > 0) {
             if (chance == 100) {
               resultsTable[reward].style.fontWeight = "bold";
@@ -509,16 +564,16 @@
       for (var key of Object.keys(rewards)) {
         var count = 0;
         var reward = rewards[key];
-        tableData[reward] = [];
+        tableData[key] = [reward];
         for (var key2 of Object.keys(results)) {
           var index = key2 + String(key).padStart(2, '0');
           if (resultsTable[index].innerText == "✗") {
             ++count;
-            tableData[reward].push(0);
+            tableData[key].push(0);
           } else if (resultsTable[index].innerText == "✓") {
-            tableData[reward].push(100);
+            tableData[key].push(100);
           } else {
-            tableData[reward].push(parseFloat(resultsTable[index].innerText));
+            tableData[key].push(parseFloat(resultsTable[index].innerText));
           }
         }
         if (count > 7) {
@@ -530,30 +585,37 @@
       var bestChanceReward = 0;
       var bestChanceChoices = [];
       var bestChanceSum = 0;
+      var bestChanceIndices = [];
       var bestRewardValue = 0;
       var bestRewardChance = 0;
       var bestRewardChoices = [];
       var bestRewardSum = 0;
-      for (var reward of Object.keys(tableData)) {
+      var bestRewardIndices = [];
+      for (var key of Object.keys(tableData)) {
+        var reward = tableData[key][0];
         var rewardValue = parseInt(reward);
-        var maxChance = Math.max(...tableData[reward]);
+        var maxChance = Math.max(...tableData[key].slice(1));
         if (maxChance > bestChanceValue ||
           maxChance == bestChanceValue && rewardValue > bestChanceReward
         ) {
           bestChanceValue = maxChance;
           bestChanceReward = rewardValue;
-          bestChanceChoices = tableData[reward].reduce(
+          bestChanceChoices = tableData[key].slice(1).reduce(
             (a, e, i) => (e === maxChance) ? a.concat(i) : a, []).map(
               e => String.fromCharCode(String('A').charCodeAt(0) + e));
+          bestChanceIndices =
+            bestChanceChoices.map(e => e + key.padStart(2, "0"));
         }
         if (rewardValue > bestRewardValue && maxChance > 0 ||
           rewardValue == bestRewardValue && maxChance > bestRewardChance
         ) {
           bestRewardValue = rewardValue;
           bestRewardChance = maxChance;
-          bestRewardChoices = tableData[reward].reduce(
+          bestRewardChoices = tableData[key].slice(1).reduce(
             (a, e, i) => (e === maxChance) ? a.concat(i) : a, []).map(
               e => String.fromCharCode(String('A').charCodeAt(0) + e));
+          bestRewardIndices =
+            bestRewardChoices.map(e => e + key.padStart(2, "0"));
         }
       }
       bestChance.innerHTML = "<strong>Best Chance:</strong> " + 
@@ -561,6 +623,12 @@
         bestChanceChoices.join(", ");
       bestReward.innerHTML = "<strong>Best Reward:</strong> " + bestRewardValue 
         + " at " + bestRewardChance + "% on " + bestRewardChoices.join(", ");
+      for (var index of bestChanceIndices) {
+        resultsTable[index].className = "bestChance";
+      }
+      for (var index of bestRewardIndices) {
+        resultsTable[index].className = "bestReward";
+      }
     }
 
     updateChances();
