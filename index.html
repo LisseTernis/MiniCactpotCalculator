@@ -1,0 +1,569 @@
+<html>
+  <head>
+    <style>
+
+    body {
+      font-family: Avenir Next, sans-serif;
+      font-size: 10pt;
+      color: #302d2d;
+      background-color: #f3f1ec;
+    }
+
+    table {
+      border-collapse: collapse;
+      font-style: normal;
+      font-weight: normal;
+      margin: 0;
+      padding: 0;
+      caption-side: top;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    tbody tr:nth-child(odd) { background-color: #d6d6d6; }
+
+    th {
+      font-weight: 600;
+      vertical-align: bottom;
+      padding-right: 0.5em;
+      text-align: left;
+    }
+
+    th:last-child {
+      padding-right: 0;
+    }
+
+    td {
+      vertical-align: top;
+      padding-right: 0.5em;
+    }
+
+    td:last-child {
+      padding-right: 0;
+    }
+
+    td.bestChance {
+      background-color: lightgreen;
+    }
+
+    td.bestReward {
+      background-color: yellow;
+    }
+
+    </style>
+  </head>
+  <body>
+    <p>
+    <table>
+      <tr>
+        <td>D</td><td></td><td>E</td><td>F</td><td>G</td><td></td><td>H</td><td></td>
+      </tr><tr>
+        <!--<td>D↘︎</td><td>E↓</td><td>F↓</td><td>G↓</td><td>H↙︎</td>-->
+        <td></td><td>↘︎</td><td>↓</td><td>↓</td><td>↓</td><td>↙︎</td><td></td>
+        <td> </td>
+      </tr>
+      <tr>
+        <td>C</td><td>→</td>
+        <td><input id="aa"/></td>
+        <td><input id="ba"/></td>
+        <td><input id="ca"/></td>
+        <td> </td>
+        <td> </td>
+        <td class="bestChance" id="bestChance">Blah</td>
+      </tr>
+      <tr>
+        <td>B</td><td>→</td>
+        <td><input id="ab"/></td>
+        <td><input id="bb"/></td>
+        <td><input id="cb"/></td>
+        <td> </td>
+        <td> </td>
+        <td class="bestReward" id="bestReward">Blah</td>
+      </tr>
+      <tr>
+        <td>A</td><td>→</td>
+        <td><input id="ac"/></td>
+        <td><input id="bc"/></td>
+        <td><input id="cc"/></td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+      </tr>
+    </table>
+    </p><p>
+    <table>
+    <tr>
+    <th>Sum</th><th>Reward</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th>
+    </tr><tr>
+    <td id="06"> 6:</td><td>10000</td><td id="A06"></td><td id="B06"></td><td id="C06"></td><td id="D06"></td><td id="E06"></td><td id="F06"></td><td id="G06"></td><td id="H06"></td></tr><tr>
+    <td id="07"> 7:</td><td>   36</td><td id="A07"></td><td id="B07"></td><td id="C07"></td><td id="D07"></td><td id="E07"></td><td id="F07"></td><td id="G07"></td><td id="H07"></td></tr><tr>
+    <td id="08"> 8:</td><td>  720</td><td id="A08"></td><td id="B08"></td><td id="C08"></td><td id="D08"></td><td id="E08"></td><td id="F08"></td><td id="G08"></td><td id="H08"></td></tr><tr>
+    <td id="09"> 9:</td><td>  360</td><td id="A09"></td><td id="B09"></td><td id="C09"></td><td id="D09"></td><td id="E09"></td><td id="F09"></td><td id="G09"></td><td id="H09"></td></tr><tr>
+    <td id="10">10:</td><td>   80</td><td id="A10"></td><td id="B10"></td><td id="C10"></td><td id="D10"></td><td id="E10"></td><td id="F10"></td><td id="G10"></td><td id="H10"></td></tr><tr>
+    <td id="11">11:</td><td>  252</td><td id="A11"></td><td id="B11"></td><td id="C11"></td><td id="D11"></td><td id="E11"></td><td id="F11"></td><td id="G11"></td><td id="H11"></td></tr><tr>
+    <td id="12">12:</td><td>  108</td><td id="A12"></td><td id="B12"></td><td id="C12"></td><td id="D12"></td><td id="E12"></td><td id="F12"></td><td id="G12"></td><td id="H12"></td></tr><tr>
+    <td id="13">13:</td><td>   72</td><td id="A13"></td><td id="B13"></td><td id="C13"></td><td id="D13"></td><td id="E13"></td><td id="F13"></td><td id="G13"></td><td id="H13"></td></tr><tr>
+    <td id="14">14:</td><td>   54</td><td id="A14"></td><td id="B14"></td><td id="C14"></td><td id="D14"></td><td id="E14"></td><td id="F14"></td><td id="G14"></td><td id="H14"></td></tr><tr>
+    <td id="15">15:</td><td>  180</td><td id="A15"></td><td id="B15"></td><td id="C15"></td><td id="D15"></td><td id="E15"></td><td id="F15"></td><td id="G15"></td><td id="H15"></td></tr><tr>
+    <td id="16">16:</td><td>   72</td><td id="A16"></td><td id="B16"></td><td id="C16"></td><td id="D16"></td><td id="E16"></td><td id="F16"></td><td id="G16"></td><td id="H16"></td></tr><tr>
+    <td id="17">17:</td><td>  180</td><td id="A17"></td><td id="B17"></td><td id="C17"></td><td id="D17"></td><td id="E17"></td><td id="F17"></td><td id="G17"></td><td id="H17"></td></tr><tr>
+    <td id="18">18:</td><td>  119</td><td id="A18"></td><td id="B18"></td><td id="C18"></td><td id="D18"></td><td id="E18"></td><td id="F18"></td><td id="G18"></td><td id="H18"></td></tr><tr>
+    <td id="19">19:</td><td>   36</td><td id="A19"></td><td id="B19"></td><td id="C19"></td><td id="D19"></td><td id="E19"></td><td id="F19"></td><td id="G19"></td><td id="H19"></td></tr><tr>
+    <td id="20">20:</td><td>  306</td><td id="A20"></td><td id="B20"></td><td id="C20"></td><td id="D20"></td><td id="E20"></td><td id="F20"></td><td id="G20"></td><td id="H20"></td></tr><tr>
+    <td id="21">21:</td><td> 1080</td><td id="A21"></td><td id="B21"></td><td id="C21"></td><td id="D21"></td><td id="E21"></td><td id="F21"></td><td id="G21"></td><td id="H21"></td></tr><tr>
+    <td id="22">22:</td><td>  144</td><td id="A22"></td><td id="B22"></td><td id="C22"></td><td id="D22"></td><td id="E22"></td><td id="F22"></td><td id="G22"></td><td id="H22"></td></tr><tr>
+    <td id="23">23:</td><td> 1800</td><td id="A23"></td><td id="B23"></td><td id="C23"></td><td id="D23"></td><td id="E23"></td><td id="F23"></td><td id="G23"></td><td id="H23"></td></tr><tr>
+    <td id="24">24:</td><td> 3600</td><td id="A24"></td><td id="B24"></td><td id="C24"></td><td id="D24"></td><td id="E24"></td><td id="F24"></td><td id="G24"></td><td id="H24"></td></tr>
+    </table>
+    </p>
+
+    <script>
+    /* Table layout:
+     * D↘︎ E↓ F↓ G↓ H↙︎
+     * C→ aa ba ca
+     * B→ ab bb cb
+     * A→ ac bc cc
+     */
+    var rewards = {
+     6: 10000,
+     7:    36,
+     8:   720,
+     9:   360,
+    10:    80,
+    11:   252,
+    12:   108,
+    13:    72,
+    14:    54,
+    15:   180,
+    16:    72,
+    17:   180,
+    18:   119,
+    19:    36,
+    20:   306,
+    21:  1080,
+    22:   144,
+    23:  1800,
+    24:  3600,
+    };
+
+    const inputWidth = "1.5em";
+    var aa = window.document.getElementById("aa");
+    aa.style.width = inputWidth;
+    aa.addEventListener("change", updateChances);
+    var ba = window.document.getElementById("ba");
+    ba.style.width = inputWidth;
+    ba.addEventListener("change", updateChances);
+    var ca = window.document.getElementById("ca");
+    ca.style.width = inputWidth;
+    ca.addEventListener("change", updateChances);
+    var ab = window.document.getElementById("ab");
+    ab.style.width = inputWidth;
+    ab.addEventListener("change", updateChances);
+    var bb = window.document.getElementById("bb");
+    bb.style.width = inputWidth;
+    bb.addEventListener("change", updateChances);
+    var cb = window.document.getElementById("cb");
+    cb.style.width = inputWidth;
+    cb.addEventListener("change", updateChances);
+    var ac = window.document.getElementById("ac");
+    ac.style.width = inputWidth;
+    ac.addEventListener("change", updateChances);
+    var bc = window.document.getElementById("bc");
+    bc.style.width = inputWidth;
+    bc.addEventListener("change", updateChances);
+    var cc = window.document.getElementById("cc");
+    cc.style.width = inputWidth;
+    cc.addEventListener("change", updateChances);
+
+    var bestChance = window.document.getElementById("bestChance");
+    var bestReward = window.document.getElementById("bestReward");
+
+    var resultsTable = {
+    06: window.document.getElementById("06"),
+    07: window.document.getElementById("07"),
+    08: window.document.getElementById("08"),
+    09: window.document.getElementById("09"),
+    10: window.document.getElementById("10"),
+    11: window.document.getElementById("11"),
+    12: window.document.getElementById("12"),
+    13: window.document.getElementById("13"),
+    14: window.document.getElementById("14"),
+    15: window.document.getElementById("15"),
+    16: window.document.getElementById("16"),
+    17: window.document.getElementById("17"),
+    18: window.document.getElementById("18"),
+    19: window.document.getElementById("19"),
+    20: window.document.getElementById("20"),
+    21: window.document.getElementById("21"),
+    22: window.document.getElementById("22"),
+    23: window.document.getElementById("23"),
+    24: window.document.getElementById("24"),
+
+    A06: window.document.getElementById("A06"),
+    A07: window.document.getElementById("A07"),
+    A08: window.document.getElementById("A08"),
+    A09: window.document.getElementById("A09"),
+    A10: window.document.getElementById("A10"),
+    A11: window.document.getElementById("A11"),
+    A12: window.document.getElementById("A12"),
+    A13: window.document.getElementById("A13"),
+    A14: window.document.getElementById("A14"),
+    A15: window.document.getElementById("A15"),
+    A16: window.document.getElementById("A16"),
+    A17: window.document.getElementById("A17"),
+    A18: window.document.getElementById("A18"),
+    A19: window.document.getElementById("A19"),
+    A20: window.document.getElementById("A20"),
+    A21: window.document.getElementById("A21"),
+    A22: window.document.getElementById("A22"),
+    A23: window.document.getElementById("A23"),
+    A24: window.document.getElementById("A24"),
+
+    B06: window.document.getElementById("B06"),
+    B07: window.document.getElementById("B07"),
+    B08: window.document.getElementById("B08"),
+    B09: window.document.getElementById("B09"),
+    B10: window.document.getElementById("B10"),
+    B11: window.document.getElementById("B11"),
+    B12: window.document.getElementById("B12"),
+    B13: window.document.getElementById("B13"),
+    B14: window.document.getElementById("B14"),
+    B15: window.document.getElementById("B15"),
+    B16: window.document.getElementById("B16"),
+    B17: window.document.getElementById("B17"),
+    B18: window.document.getElementById("B18"),
+    B19: window.document.getElementById("B19"),
+    B20: window.document.getElementById("B20"),
+    B21: window.document.getElementById("B21"),
+    B22: window.document.getElementById("B22"),
+    B23: window.document.getElementById("B23"),
+    B24: window.document.getElementById("B24"),
+
+    C06: window.document.getElementById("C06"),
+    C07: window.document.getElementById("C07"),
+    C08: window.document.getElementById("C08"),
+    C09: window.document.getElementById("C09"),
+    C10: window.document.getElementById("C10"),
+    C11: window.document.getElementById("C11"),
+    C12: window.document.getElementById("C12"),
+    C13: window.document.getElementById("C13"),
+    C14: window.document.getElementById("C14"),
+    C15: window.document.getElementById("C15"),
+    C16: window.document.getElementById("C16"),
+    C17: window.document.getElementById("C17"),
+    C18: window.document.getElementById("C18"),
+    C19: window.document.getElementById("C19"),
+    C20: window.document.getElementById("C20"),
+    C21: window.document.getElementById("C21"),
+    C22: window.document.getElementById("C22"),
+    C23: window.document.getElementById("C23"),
+    C24: window.document.getElementById("C24"),
+
+    D06: window.document.getElementById("D06"),
+    D07: window.document.getElementById("D07"),
+    D08: window.document.getElementById("D08"),
+    D09: window.document.getElementById("D09"),
+    D10: window.document.getElementById("D10"),
+    D11: window.document.getElementById("D11"),
+    D12: window.document.getElementById("D12"),
+    D13: window.document.getElementById("D13"),
+    D14: window.document.getElementById("D14"),
+    D15: window.document.getElementById("D15"),
+    D16: window.document.getElementById("D16"),
+    D17: window.document.getElementById("D17"),
+    D18: window.document.getElementById("D18"),
+    D19: window.document.getElementById("D19"),
+    D20: window.document.getElementById("D20"),
+    D21: window.document.getElementById("D21"),
+    D22: window.document.getElementById("D22"),
+    D23: window.document.getElementById("D23"),
+    D24: window.document.getElementById("D24"),
+
+    E06: window.document.getElementById("E06"),
+    E07: window.document.getElementById("E07"),
+    E08: window.document.getElementById("E08"),
+    E09: window.document.getElementById("E09"),
+    E10: window.document.getElementById("E10"),
+    E11: window.document.getElementById("E11"),
+    E12: window.document.getElementById("E12"),
+    E13: window.document.getElementById("E13"),
+    E14: window.document.getElementById("E14"),
+    E15: window.document.getElementById("E15"),
+    E16: window.document.getElementById("E16"),
+    E17: window.document.getElementById("E17"),
+    E18: window.document.getElementById("E18"),
+    E19: window.document.getElementById("E19"),
+    E20: window.document.getElementById("E20"),
+    E21: window.document.getElementById("E21"),
+    E22: window.document.getElementById("E22"),
+    E23: window.document.getElementById("E23"),
+    E24: window.document.getElementById("E24"),
+
+    F06: window.document.getElementById("F06"),
+    F07: window.document.getElementById("F07"),
+    F08: window.document.getElementById("F08"),
+    F09: window.document.getElementById("F09"),
+    F10: window.document.getElementById("F10"),
+    F11: window.document.getElementById("F11"),
+    F12: window.document.getElementById("F12"),
+    F13: window.document.getElementById("F13"),
+    F14: window.document.getElementById("F14"),
+    F15: window.document.getElementById("F15"),
+    F16: window.document.getElementById("F16"),
+    F17: window.document.getElementById("F17"),
+    F18: window.document.getElementById("F18"),
+    F19: window.document.getElementById("F19"),
+    F20: window.document.getElementById("F20"),
+    F21: window.document.getElementById("F21"),
+    F22: window.document.getElementById("F22"),
+    F23: window.document.getElementById("F23"),
+    F24: window.document.getElementById("F24"),
+
+    G06: window.document.getElementById("G06"),
+    G07: window.document.getElementById("G07"),
+    G08: window.document.getElementById("G08"),
+    G09: window.document.getElementById("G09"),
+    G10: window.document.getElementById("G10"),
+    G11: window.document.getElementById("G11"),
+    G12: window.document.getElementById("G12"),
+    G13: window.document.getElementById("G13"),
+    G14: window.document.getElementById("G14"),
+    G15: window.document.getElementById("G15"),
+    G16: window.document.getElementById("G16"),
+    G17: window.document.getElementById("G17"),
+    G18: window.document.getElementById("G18"),
+    G19: window.document.getElementById("G19"),
+    G20: window.document.getElementById("G20"),
+    G21: window.document.getElementById("G21"),
+    G22: window.document.getElementById("G22"),
+    G23: window.document.getElementById("G23"),
+    G24: window.document.getElementById("G24"),
+
+    H06: window.document.getElementById("H06"),
+    H07: window.document.getElementById("H07"),
+    H08: window.document.getElementById("H08"),
+    H09: window.document.getElementById("H09"),
+    H10: window.document.getElementById("H10"),
+    H11: window.document.getElementById("H11"),
+    H12: window.document.getElementById("H12"),
+    H13: window.document.getElementById("H13"),
+    H14: window.document.getElementById("H14"),
+    H15: window.document.getElementById("H15"),
+    H16: window.document.getElementById("H16"),
+    H17: window.document.getElementById("H17"),
+    H18: window.document.getElementById("H18"),
+    H19: window.document.getElementById("H19"),
+    H20: window.document.getElementById("H20"),
+    H21: window.document.getElementById("H21"),
+    H22: window.document.getElementById("H22"),
+    H23: window.document.getElementById("H23"),
+    H24: window.document.getElementById("H24"),
+    }
+
+    for (var value of Object.values(resultsTable)) {
+      value.style.width = "3em";
+    }
+
+    var results = {
+    A: [ac, bc, cc],
+    B: [ab, bb, cb],
+    C: [aa, ba, ca],
+    D: [aa, bb, cc],
+    E: [aa, ab, ac],
+    F: [ba, bb, bc],
+    G: [ca, cb, cc],
+    H: [ca, bb, ac],
+    };
+
+    function getKnownNumbers() {
+      var known = [];
+      for (var result of Object.values(results)) {
+        for (var r of result) {
+          if (r.value != "") {
+            known.push(parseInt(r.value));
+          }
+        }
+      }
+      return known;
+    }
+
+    function recursiveCombinations(options, length) {
+      var results = [];
+      for (var [index, element] of options.entries()) {
+        var result = [element];
+        if (length > 1) {
+          var newOptions = Array.from(options);
+          newOptions.splice(index, 1);
+          for (var rest of
+               recursiveCombinations(newOptions, length - 1))
+          {
+            results.push(result.concat(rest));
+          }
+        } else {
+          results.push(result);
+        }
+      }
+      return results;
+    }
+
+    function calcChances(r, known) {
+      var result = results[r];
+      var set = [];
+      var sum = 0;
+      var value;
+      for (var input of result) {
+        if (input.value != "") {
+          value = parseInt(input.value);
+          set.push(value);
+          sum += value;
+        }
+      }
+      var chances = {
+         6: 0,
+         7: 0,
+         8: 0,
+         9: 0,
+        10: 0,
+        11: 0,
+        12: 0,
+        13: 0,
+        14: 0,
+        15: 0,
+        16: 0,
+        17: 0,
+        18: 0,
+        19: 0,
+        20: 0,
+        21: 0,
+        22: 0,
+        23: 0,
+        24: 0,
+      };
+      if (set.length > 2) {
+        // No need to do more math here.
+        chances[sum] = 100;
+        return chances;
+      }
+      // Otherwise, continue.
+      var options = [];
+      for (var o = 1; o < 10; ++o) {
+        if (!known.includes(o)) {
+          options.push(o);
+        }
+      }
+      var count = 0;
+      var totalSum;
+      var combinations = recursiveCombinations(options, 3 - set.length);
+      for (var combination of combinations) {
+        totalSum = sum + combination.reduce(
+          (accumulator, value) => accumulator + value);
+        ++chances[totalSum];
+        ++count;
+      }
+      for (var key of Object.keys(chances)) {
+        chances[key] = 100 * chances[key] / count;
+      }
+      return chances;
+    }
+
+    function updateChances() {
+      var known = getKnownNumbers();
+      var chances;
+      for (var key of Object.keys(rewards)) {
+        resultsTable[key].style.color = "inherit";
+        resultsTable[key].style.fontWeight = "inherit";
+        resultsTable[key].style.textDecoration = "inherit";
+      }
+      for (var key of Object.keys(results)) {
+        chances = calcChances(key, known);
+        for (var [reward, chance] of Object.entries(chances)) {
+          var index = key + String(reward).padStart(2, '0');
+          if (chance > 0) {
+            if (chance == 100) {
+              resultsTable[reward].style.fontWeight = "bold";
+              resultsTable[reward].style.color = "blue";
+              resultsTable[index].innerText = "✓";
+              resultsTable[index].style.fontWeight = "bold";
+              resultsTable[index].style.color = "blue";
+              resultsTable[index].style.opacity = 1;
+            } else {
+              resultsTable[index].innerText = chance.toFixed(1);
+              resultsTable[index].style.fontWeight = "inherit";
+              resultsTable[index].style.color = "inherit";
+              //resultsTable[index].style.opacity = chance / 66.7 + 0.25;
+              //resultsTable[index].style.opacity = 0.58859191 * Math.log10(chance);
+              resultsTable[index].style.opacity = 0.255622218 * Math.log(chance);
+            }
+          } else {
+            resultsTable[index].innerText = "✗";
+            resultsTable[index].style.fontWeight = "inherit";
+            //resultsTable[index].style.color = "lightgrey";
+            resultsTable[index].style.color = "darkred";
+            resultsTable[index].style.opacity = 1;
+          }
+        }
+      }
+      var tableData = {};
+      for (var key of Object.keys(rewards)) {
+        var count = 0;
+        var reward = rewards[key];
+        tableData[reward] = [];
+        for (var key2 of Object.keys(results)) {
+          var index = key2 + String(key).padStart(2, '0');
+          if (resultsTable[index].innerText == "✗") {
+            ++count;
+            tableData[reward].push(0);
+          } else if (resultsTable[index].innerText == "✓") {
+            tableData[reward].push(100);
+          } else {
+            tableData[reward].push(parseFloat(resultsTable[index].innerText));
+          }
+        }
+        if (count > 7) {
+          resultsTable[key].style.textDecoration = "line-through";
+          resultsTable[key].style.color = "darkred";
+        }
+      }
+      var bestChanceValue = 0;
+      var bestChanceReward = 0;
+      var bestChanceChoices = [];
+      var bestChanceSum = 0;
+      var bestRewardValue = 0;
+      var bestRewardChance = 0;
+      var bestRewardChoices = [];
+      var bestRewardSum = 0;
+      for (var reward of Object.keys(tableData)) {
+        var rewardValue = parseInt(reward);
+        var maxChance = Math.max(...tableData[reward]);
+        if (maxChance > bestChanceValue ||
+          maxChance == bestChanceValue && rewardValue > bestChanceReward
+        ) {
+          bestChanceValue = maxChance;
+          bestChanceReward = rewardValue;
+          bestChanceChoices = tableData[reward].reduce(
+            (a, e, i) => (e === maxChance) ? a.concat(i) : a, []).map(
+              e => String.fromCharCode(String('A').charCodeAt(0) + e));
+        }
+        if (rewardValue > bestRewardValue && maxChance > 0 ||
+          rewardValue == bestRewardValue && maxChance > bestRewardChance
+        ) {
+          bestRewardValue = rewardValue;
+          bestRewardChance = maxChance;
+          bestRewardChoices = tableData[reward].reduce(
+            (a, e, i) => (e === maxChance) ? a.concat(i) : a, []).map(
+              e => String.fromCharCode(String('A').charCodeAt(0) + e));
+        }
+      }
+      bestChance.innerHTML = "<strong>Best Chance:</strong> " + 
+        bestChanceReward + " at " + bestChanceValue + "% on " + 
+        bestChanceChoices.join(", ");
+      bestReward.innerHTML = "<strong>Best Reward:</strong> " + bestRewardValue 
+        + " at " + bestRewardChance + "% on " + bestRewardChoices.join(", ");
+    }
+
+    updateChances();
+    </script>
+  </body>
+</html>
